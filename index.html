@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Python — особенности языка | Синяя эстетика кода</title>
+    <!-- Современный шрифт и иконка Font Awesome для акцентов -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0a1128 0%, #0b1a3a 100%);
+            font-family: 'Inter', sans-serif;
+            color: #eef5ff;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* Синяя тематика: глубокие оттенки, акценты циан/лазурь */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* header стиль */
+        .hero {
+            text-align: center;
+            padding: 2rem 0 3rem 0;
+            border-bottom: 2px solid rgba(0, 180, 255, 0.25);
+            margin-bottom: 2.5rem;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #b8e1ff, #3b82f6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero .sub {
+            font-size: 1.2rem;
+            color: #9bb8e0;
+            max-width: 650px;
+            margin: 0 auto;
+            font-weight: 400;
+            backdrop-filter: blur(4px);
+        }
+
+        .python-badge {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            margin-top: 1.2rem;
+        }
+
+        /* сетка карточек особенностей */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0 4rem 0;
+        }
+
+        .feature-card {
+            background: rgba(8, 28, 51, 0.65);
+            backdrop-filter: blur(4px);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            border: 1px solid rgba(56, 139, 253, 0.35);
+            transition: all 0.25s ease-in-out;
+            box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+            background: rgba(10, 35, 65, 0.75);
+            box-shadow: 0 20px 32px -12px rgba(0, 110, 255, 0.2);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: #60a5fa;
+            margin-bottom: 1.2rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.65rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: -0.3px;
+            background: linear-gradient(120deg, #e0f0ff, #7aa9ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .feature-card p {
+            color: #cbdff5;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* секция с сниппетами кода */
+        .code-showcase {
+            background: #07152b;
+            border-radius: 2rem;
+            padding: 2rem;
+            margin: 2rem 0 3rem;
+            border: 1px solid #1e3a8a;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .section-title {
+            font-size: 1.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title i {
+            color: #3b82f6;
+            font-size: 2rem;
+        }
+
+        .code-block {
+            background: #010b1a;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: #bbd7fb;
+            border-left: 5px solid #3b82f6;
+            margin: 1rem 0;
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-family: inherit;
+        }
+
+        .flex-cols-2 {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .info-panel {
+            background: rgba(3, 20, 45, 0.7);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            flex: 1;
+            border: 1px solid #1e4b8f;
+        }
+
+        .info-panel h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: #7ab3ff;
+        }
+
+        /* таблица версий / фич */
+        .version-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0, 15, 35, 0.6);
+            border-radius: 1.2rem;
+            overflow: hidden;
+        }
+
+        .version-table th, .version-table td {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #1e4a76;
+        }
+
+        .version-table th {
+            background-color: #0e2a4b;
+            color: #b9dcff;
+            font-weight: 600;
+        }
+
+        /* футер */
+        .footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 2rem 0 1rem;
+            border-top: 1px solid #1e3a8a;
+            font-size: 0.85rem;
+            color: #7d9fd3;
+        }
+
+        /* кнопка вверх */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #2563eb;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: 0.2s;
+            border: none;
+            z-index: 99;
+        }
+
+        .scroll-top:hover {
+            background: #1d4ed8;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 700px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-title {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="hero">
+        <h1>Python <span style="color:#60a5fa;">·</span> элегантность и сила</h1>
+        <div class="sub">
+            Язык программирования, который вдохновляет на чистоту кода, быструю разработку и масштабируемость.
+        </div>
+        <div class="python-badge">
+            <i class="fab fa-python"></i>  #1 язык для AI, данных и автоматизации
+        </div>
+    </div>
+
+    <!-- Сетка особенностей языка -->
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="card-icon"><i class="fas fa-feather-alt"></i></div>
+            <h3>Читаемый & лаконичный</h3>
+            <p>Синтаксис Python приближен к английскому языку. Отступы вместо фигурных скобок формируют понятную структуру, ускоряя понимание кода и сотрудничество в командах.</p>
+        </div>
+        <div class="feature-card">
+            <div class="card-icon"><i class="fas fa-cubes"></i></div>
+            <h3>Динамическая типизация</h3>
+            <p>Переменные не требуют явного объявления типа. Python выводит типы во время выполнения, что даёт гибкость и скорость прототипирования, сохраняя выразительность.</p>
+        </div>
+        <div class="feature-card">
+            <div class="card-icon"><i class="fas fa-layer-group"></i></div>
+            <h3>Огромная экосистема</h3>
+            <p>PyPI содержит сотни тысяч библиотек: от NumPy, Pandas до Django, FastAPI, TensorFlow. «Батарейки в комплекте» — стандартная библиотека покрывает 90% повседневных задач.</p>
+        </div>
+        <div class="feature-card">
+            <div class="card-icon"><i class="fas fa-sync-alt"></i></div>
+            <h3>Кроссплатформенность</h3>
+            <p>Один и тот же код работает на Windows, Linux, macOS. Интерпретатор CPython написан на C и легко интегрируется с низкоуровневыми модулями.</p>
+        </div>
+        <div class="feature-card">
+            <div class="card-icon"><i class="fas fa-brain"></i></div>
+            <h3>Поддержка парадигм</h3>
+            <p>Объектно-ориентированное, функциональное, процедурное программирование. Наследование, декораторы, генераторы, лямбда-функции — всё в одном флаконе.</p>
+        </div>
+        <div class="feature-card">
+            <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+            <h3>Идеален для начинающих</h3>
+            <p>Простой порог входа, интерактивная оболочка, огромное сообщество. При этом Python используется в NASA, Google, Dropbox и для самых сложных вычислительных задач.</p>
+        </div>
+    </div>
+
+    <!-- Блок с интерактивными примерами и кодом -->
+    <div class="code-showcase">
+        <div class="section-title">
+            <i class="fab fa-python"></i>
+            <span>Особенности в коде</span>
+        </div>
+        <p style="margin-bottom: 1.2rem;">Динамичность, читаемость и мощь — вот что отличает Python. Взгляните на примеры:</p>
+        
+        <div class="flex-cols-2">
+            <div class="info-panel">
+                <h4><i class="fas fa-code-branch"></i>  Простота циклов</h4>
+                <div class="code-block">
+                    <pre># Генератор списка — элегантность в одной строке
+squares = [x**2 for x in range(10)]
+print(squares)
+
+# Итерация по словарю
+user = {"name": "Alex", "lang": "Python"}
+for key, value in user.items():
+    print(f"{key} -> {value}")</pre>
+                </div>
+            </div>
+            <div class="info-panel">
+                <h4><i class="fas fa-crown"></i>  Декораторы & функции</h4>
+                <div class="code-block">
+                    <pre>def timer(func):
+    import time
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        print(f"Время: {time.time()-start:.4f}с")
+        return result
+    return wrapper
+
+@timer
+def heavy_computation(n):
+    return sum(i*i for i in range(n))</pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-cols-2" style="margin-top: 1.2rem;">
+            <div class="info-panel">
+                <h4><i class="fas fa-database"></i>  Динамическая магия</h4>
+                <div class="code-block">
+                    <pre># Переменная может менять тип на лету
+data = 42
+print(type(data))   # &lt;class 'int'>
+data = "Теперь строка"
+print(type(data))   # &lt;class 'str'>
+
+# Множественное присваивание
+a, b, c = 5, "hello", [1, 2]</pre>
+                </div>
+            </div>
+            <div class="info-panel">
+                <h4><i class="fas fa-plug"></i>  Срезы и коллекции</h4>
+                <div class="code-block">
+                    <pre>text = "Python особенность"
+print(text[::2])    # Каждый второй символ
+# Работа со списками:
+items = [10, 20, 30, 40, 50]
+items.reverse()
+print(items[-2:])   # [40, 30] — мощные срезы
+
+# множества и операции
+a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+print(a | b)  # объединение</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Дополнительная таблица: ключевые версии и нововведения -->
+    <div class="section-title" style="margin-top: 1rem;">
+        <i class="fas fa-history"></i>
+        <span>Эволюция и современные фичи</span>
+    </div>
+    <table class="version-table">
+        <thead>
+            <tr><th>Версия</th><th>Ключевое нововведение</th><th>Влияние на особенности языка</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Python 3.8</td><td>Walrus operator (:=)</td><td>Условное присваивание внутри выражений — лаконичность циклов.</td></tr>
+            <tr><td>Python 3.9</td><td>Операторы объединения словарей (|)</td><td>Более выразительная работа с данными.</td></tr>
+            <tr><td>Python 3.10</td><td>Structural Pattern Matching (match/case)</td><td>Синтаксис, похожий на switch, но с деструктуризацией.</td></tr>
+            <tr><td>Python 3.11+</td><td>Ускоренный интерпретатор, better tracebacks</td><td>Производительность и удобство отладки.</td></tr>
+            <tr><td>Python 3.12</td><td>Улучшенная обработка f-строк, типобезопасность</td><td>Более чистый код и ранние аннотации.</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Блок о сферах применения -->
+    <div style="background: rgba(2, 25, 55, 0.5); border-radius: 1.8rem; padding: 1.8rem; margin: 3rem 0 1rem;">
+        <div class="section-title" style="margin-bottom: 0.5rem;">
+            <i class="fas fa-chart-line"></i>
+            <span>Где Python вне конкуренции</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: space-between; margin-top: 1rem;">
+            <div style="flex:1; min-width: 160px;"><i class="fas fa-robot" style="color:#3b82f6;"></i> Искусственный интеллект</div>
+            <div style="flex:1; min-width: 160px;"><i class="fas fa-chart-bar"></i> Data Science / ML</div>
+            <div style="flex:1; min-width: 160px;"><i class="fas fa-globe"></i> Веб-бэкенд (Django, FastAPI)</div>
+            <div style="flex:1; min-width: 160px;"><i class="fas fa-terminal"></i> DevOps / автоматизация</div>
+            <div style="flex:1; min-width: 160px;"><i class="fas fa-gamepad"></i> Игродевинг (Godot, Ren'Py)</div>
+        </div>
+        <div class="code-block" style="margin-top: 1.4rem; background: #03152b;">
+            <pre># Простой HTTP-сервер одной строкой (встроенный модуль)
+# python -m http.server 8000
+# Асинхронный пример (современная особенность)
+import asyncio
+
+async def say_hello():
+    print("Python async/await — потрясающая гибкость!")
+    await asyncio.sleep(1)
+    print("Неблокирующий код — фишка Python 3.7+")
+
+asyncio.run(say_hello())</pre>
+        </div>
+    </div>
+
+    <!-- Цитата и философия Zen of Python -->
+    <div style="text-align: center; margin: 2.5rem 0 0; padding: 1rem; border-left: 4px solid #3b82f6; background: #0a1e3a33; border-radius: 1rem;">
+        <i class="fas fa-quote-left" style="font-size: 1.6rem; color: #4682f0; opacity: 0.7;"></i>
+        <p style="font-style: italic; font-size: 1.1rem; max-width: 800px; margin: 0.5rem auto;">"Beautiful is better than ugly. Explicit is better than implicit. Simple is better than complex."<br>— The Zen of Python (PEP 20)</p>
+    </div>
+    
+    <div class="footer">
+        <i class="fab fa-python"></i>  <br>
+        © 2025 
+    </div>
+</div>
+
+<!-- Кнопка прокрутки вверх -->
+<button class="scroll-top" id="scrollTopBtn" aria-label="Наверх">
+    <i class="fas fa-chevron-up"></i>
+</button>
+
+<script>
+    // простая анимация скролла к началу и плавность
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    if(scrollBtn) {
+        scrollBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // добавляем эффект появления кнопки при скролле более 300px
+    window.addEventListener('scroll', () => {
+        if(window.scrollY > 400) {
+            scrollBtn.style.opacity = '1';
+            scrollBtn.style.visibility = 'visible';
+        } else {
+            scrollBtn.style.opacity = '0.6';
+            // все равно видна, но можно сделать менее заметной, но оставим доступной
+        }
+    });
+    // Инициализация состояния
+    scrollBtn.style.transition = 'opacity 0.2s';
+</script>
+</body>
+</html>
